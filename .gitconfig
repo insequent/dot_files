@@ -1,0 +1,7 @@
+[user]
+	email = deathbeforedishes@gmail.com
+	name = insequent
+[core]
+	excludesfile = ~/.gitglobalignore
+[http]
+	cookiefile = /home/dark/.gitcookies

@@ -1,0 +1,8 @@
+# Directories
+*.egg-info/
+.eggs/
+.tox/
+.venv/
+
+# Files
+.sw[pon]

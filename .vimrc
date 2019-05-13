@@ -1,40 +1,41 @@
 set nocompatible              " be iMproved, required
 filetype off
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" Specify a directory for plugins
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Format git pulls to use SSH instead of HTTPS
+let g:plug_url_format = 'git@github.com:%s.git'
 
 " Let the plugins begin!
-Plugin 'neoclide/coc.nvim.git'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'fatih/vim-go.git'
-Plugin 'udalov/kotlin-vim.git'
-Plugin 'hashivim/vim-terraform.git'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'fatih/vim-go'
+Plug 'udalov/kotlin-vim'
+Plug 'hashivim/vim-terraform'
+
+" Plugins handled by OS
+" Plugin 'pearofducks/ansible-vim'
+" Plugin 'raimondi/delimitmate'
+" Plugin 'scrooloose/nerdtree'
+" Plugin 'vim-syntastic/syntastic'
+" Plugin 'tpope/vim-fugitive'
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()            " required
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
+filetype plugin indent on    " required
 "
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-" :PluginUpdate     - updates configured plugins
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-" Set YCM to autoclose preview pane when done
-let g:ycm_autoclose_preview_window_after_completion = 1
+" Brief help on vim-plug
+" :PlugInstall [name ...] [# threads]   " Installs plugins
+" :PlugUpdate [name ...] [# threads]    " Install or update plugins
+" :PlugClean[!]                         " Remove unused directories (bang is without prompts)
+" :PlugUpgrade                          " Upgrades vim-plug
+" :PlugStatus                           " Check the status of plugins
+" :PlugDiff                             " Examines diff between previous and pending changes
+" :PlugSnapshot[!] [output path]        " Generate script for restoring the current snapshot of plugins
 
 " Nerdtree stuffs
 map <C-n> :NERDTreeToggle<CR>
@@ -50,7 +51,7 @@ set number
 set encoding=utf8
 
 " Use spaces instead of tabs, enable smart tabbing
-set expandtab
+" set expandtab
 set smarttab
 
 " 1 tab == 4 spaces
@@ -64,15 +65,12 @@ set smarttab
 " Increase buffer size
 set viminfo='20,<1000,s1000
 
-" Forcing python 3 for now
-let g:ycm_python_binary_path = "/usr/bin/python3"
-
 " Ignoring 80 rule
 let g:pep8_ignore="E501"
 
 " Foldlevel is annoying...
 set foldlevelstart=99
 
-" SUPER ANNOYING tabbing on colon fix
+" SUPER ANNOYING tabbing on colon fix (sorta)
 autocmd FileType python setlocal indentkeys-=<:>
 autocmd FileType python setlocal indentkeys-=:
