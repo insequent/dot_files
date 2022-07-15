@@ -9,17 +9,24 @@ call plug#begin('~/.vim/plugged')
 let g:plug_url_format = 'git@github.com:%s.git'
 
 " Let the plugins begin!
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
-Plug 'fatih/vim-go'
-Plug 'udalov/kotlin-vim'
+" CoC handles its own LSP adapters :CocInstall coc-flutter coc-go coc-jedi
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'hashivim/vim-terraform'
+Plug 'nvie/vim-flake8'
+Plug 'LokiChaos/vim-tintin'
+Plug 'ycm-core/YouCompleteMe', {'do': './install.py --all'}
+"Plug 'dracula/vim', {'as': 'dracula'}
 
-" Plugins handled by OS
-" Plugin 'pearofducks/ansible-vim'
-" Plugin 'raimondi/delimitmate'
-" Plugin 'scrooloose/nerdtree'
-" Plugin 'vim-syntastic/syntastic'
-" Plugin 'tpope/vim-fugitive'
+" Handled by OS
+" Plugin 'powerline/powerline'     (pacman -S powerline)
+" Plugin 'pearofducks/ansible-vim' (AUR ansible-vim-get)
+" Plugin 'raimondi/delimitmate'    (AUR vim-delimitmate)
+" Plugin 'scrooloose/nerdtree'     (pacman -S vim-nerdtree)
+" Plugin 'vim-syntastic/syntastic' (pacman -S vim-syntastic)
+" Plugin 'tpope/vim-fugitive'      (pacman -S vim-fugitive)
+" Plugin 'w0rp/ale'                (pacman -S vim-ale)
 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
@@ -38,39 +45,52 @@ filetype plugin indent on    " required
 " :PlugSnapshot[!] [output path]        " Generate script for restoring the current snapshot of plugins
 
 " Nerdtree stuffs
-map <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Turn on syntax highlighting
+" YouCompleteMe stuffs
+let g:ycm_autoclose_preview_window_after_insertion = 1
+nmap <C-d> :YcmCompleter GoToDefinition<CR>
+nmap <C-k> :YcmCompleter GetDoc<CR>
+
+" General Vim settings
+colo industry
 syntax enable
-
-" Show line number
 set number
-
-" Set UTF8 as standard encoding
 set encoding=utf8
-
-" Use spaces instead of tabs, enable smart tabbing
-" set expandtab
 set smarttab
+"set background=dark
 
-" 1 tab == 4 spaces
-"set shiftwidth=4
-"set tabstop=4
-
-" Makefile exception
-"autocmd FileType make set noexpandtab
-"autocmd FileType make set tabstop=8
+" Tab settings for file types that don't want to play nice
+autocmd FileType dart setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType make setlocal ts=2 sw=2 noexpandtab
+autocmd FileType go setlocal ts=2 sw=2 noexpandtab
+autocmd FileType json,toml,yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType jinja,jinja2 setlocal ts=4 sts=4 sw=4 expandtab
+autocmd FileType lpc setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType tt setlocal ts=4 sts=4 sw=4 expandtab
 
 " Increase buffer size
 set viminfo='20,<1000,s1000
 
-" Ignoring 80 rule
+" Ignoring Python 80 rule
 let g:pep8_ignore="E501"
 
 " Foldlevel is annoying...
 set foldlevelstart=99
 
 " SUPER ANNOYING tabbing on colon fix (sorta)
-autocmd FileType python setlocal indentkeys-=<:>
-autocmd FileType python setlocal indentkeys-=:
+autocmd FileType * setlocal indentkeys-=<:>
+autocmd FileType * setlocal indentkeys-=:
+autocmd FileType yaml.ansible setlocal indentkeys-=*<Return>
+
+" coc shortcuts
+"nmap <C-d> :call CocAction('jumpDefinition', 'drop')
+
+" powerline stuff
+let g:powerline_pycmd="py3"
+set laststatus=2
+
+" ale stuff
+"packloadall
+"silent! helptags ALL
