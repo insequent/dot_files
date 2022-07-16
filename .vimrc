@@ -9,14 +9,15 @@ call plug#begin('~/.vim/plugged')
 let g:plug_url_format = 'git@github.com:%s.git'
 
 " Let the plugins begin!
-" CoC handles its own LSP adapters :CocInstall coc-flutter coc-go coc-jedi
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'hashivim/vim-terraform'
 Plug 'nvie/vim-flake8'
 Plug 'LokiChaos/vim-tintin'
+" Use CoC or YouCompleteMe, not both
 Plug 'ycm-core/YouCompleteMe', {'do': './install.py --all'}
+" CoC handles its own LSP adapters :CocInstall coc-flutter coc-go coc-jedi
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'dracula/vim', {'as': 'dracula'}
 
 " Handled by OS
