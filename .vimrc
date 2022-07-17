@@ -10,24 +10,25 @@ let g:plug_url_format = 'git@github.com:%s.git'
 
 " Let the plugins begin!
 Plug 'dart-lang/dart-vim-plugin'
+"Plug 'dracula/vim', {'as': 'dracula'}
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'hashivim/vim-terraform'
-Plug 'nvie/vim-flake8'
 Plug 'LokiChaos/vim-tintin'
-" Use CoC or YouCompleteMe, not both
+Plug 'nvie/vim-flake8'
+Plug 'powerline/powerline'
+Plug 'raimondi/delimitmate'
+Plug 'scrooloose/nerdtree'
+
+" You should only use one of: Ale, CoC, or YouCompleteMe
 Plug 'ycm-core/YouCompleteMe', {'do': './install.py --all'}
 " CoC handles its own LSP adapters :CocInstall coc-flutter coc-go coc-jedi
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'dracula/vim', {'as': 'dracula'}
+"Plug 'w0rp/ale'           (pacman -S vim-ale)
 
 " Handled by OS
-" Plugin 'powerline/powerline'     (pacman -S powerline)
-" Plugin 'pearofducks/ansible-vim' (AUR ansible-vim-get)
-" Plugin 'raimondi/delimitmate'    (AUR vim-delimitmate)
-" Plugin 'scrooloose/nerdtree'     (pacman -S vim-nerdtree)
-" Plugin 'vim-syntastic/syntastic' (pacman -S vim-syntastic)
-" Plugin 'tpope/vim-fugitive'      (pacman -S vim-fugitive)
-" Plugin 'w0rp/ale'                (pacman -S vim-ale)
+" Plug 'pearofducks/ansible-vim' (AUR ansible-vim-get)
+" Plug 'vim-syntastic/syntastic' (pacman -S vim-syntastic)
+" Plug 'tpope/vim-fugitive'      (pacman -S vim-fugitive)
 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
@@ -53,6 +54,17 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:ycm_autoclose_preview_window_after_insertion = 1
 nmap <C-d> :YcmCompleter GoToDefinition<CR>
 nmap <C-k> :YcmCompleter GetDoc<CR>
+
+" coc shortcuts
+"nmap <C-d> :call CocAction('jumpDefinition', 'drop')
+
+" ale stuff
+"packloadall
+"silent! helptags ALL
+
+" powerline stuff
+let g:powerline_pycmd="py3"
+set laststatus=2
 
 " General Vim settings
 colo industry
@@ -84,14 +96,3 @@ set foldlevelstart=99
 autocmd FileType * setlocal indentkeys-=<:>
 autocmd FileType * setlocal indentkeys-=:
 autocmd FileType yaml.ansible setlocal indentkeys-=*<Return>
-
-" coc shortcuts
-"nmap <C-d> :call CocAction('jumpDefinition', 'drop')
-
-" powerline stuff
-let g:powerline_pycmd="py3"
-set laststatus=2
-
-" ale stuff
-"packloadall
-"silent! helptags ALL
